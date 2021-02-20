@@ -10,10 +10,6 @@ import requests
 
 app = Flask(__name__)
 
-# Check for environment variable
-if not os.getenv("DATABASE_URL"):
-    raise RuntimeError("DATABASE_URL is not set")
-
 # fix windows terminal issue on my computer
 if sys.platform.lower() == "win64":
     os.system('color')
@@ -26,4 +22,4 @@ Session(app)
 
 @app.route("/", methods=['POST', 'GET'])
 def index():
-    
+    return render_template("index.html")
