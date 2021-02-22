@@ -15,14 +15,7 @@
     zoomOffset: -1,
     accessToken: 'pk.eyJ1Ijoiem9ld2Fsc2giLCJhIjoiY2trbGl2NzVmMWp2YjMxcTlpcmF3eXZ5YSJ9.UVZBfaC844oYgXMD0KlPDA'
   }).addTo(map);
-  function onEachFeature(feature, layer) {
-    layer.bindPopup("Issued: " + feature.properties.issueddate +
-    "<br>" + "Work Class Group: " + feature.properties.workclassgroup +
-    "<br>" + "Contractor: " + feature.properties.contractorname +
-    "<br>" + "Community: " + feature.properties.communityname +
-    "<br>" + "Original Address: " + feature.properties.originaladdress);
-  }
-  var layer = L.geoJSON([],{onEachFeature: onEachFeature}).addTo(map);
+  var layer = L.geoJSON().addTo(map);
   {% for a in data %}
   var feature = {
     "type": "{{a['type']}}",
@@ -40,19 +33,5 @@
   };
   layer.addData(feature);
   {% endfor %}
-</script>
-<h4>
-<div id="time-ranges" class="leaflet-bar">
-  <form action="{{ url_for('dates') }}" method="post" id="form">
-    <label for="from">
-      From:
-      <input id="from" type="date" value="2020-01-01" name="from">
-    </label>
-    <label for="to">
-      To:
-      <input id="to" type="date" value="2020-01-31" name="to">
-    </label>
-    <input type="submit" class="btn btn-outline-secondary" value="Update">
-  </form>
-</div></h4>
+  </script>
 {% endblock %}
