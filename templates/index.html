@@ -59,7 +59,7 @@
 
 </script>
 <!-- time picker widget -->
-<!-- also takes care of error messages if from is later than to, or if there are no permits available for the range-->
+<!-- also takes care of error messages if from is later than to, or if there are no permits available for the range, or from date is in the future-->
 <!-- selected dates are also displayed when a successful selection is made -->
 <h1>
 <div id="time-ranges" class="leaflet-bar">
@@ -91,6 +91,13 @@
       <h5><br/>
       Viewing permits: {{fr}} to {{to}}
       </h5>
+      {% endif %}
+    {% endif %}
+    {% if err2 == 1 %}
+      {% if err1 == 1 %}
+      <h4><br/>
+      Note: you have entered a "From" date in the future.
+      </h4>
       {% endif %}
     {% endif %}
   </form>
