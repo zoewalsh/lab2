@@ -3,9 +3,6 @@ import sys
 
 from flask import Flask, session, render_template, request, flash, redirect, abort, jsonify
 from flask_session import Session
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
-from werkzeug.security import generate_password_hash, check_password_hash
 import requests
 import geojson
 import json
@@ -16,18 +13,12 @@ app = Flask(__name__)
 if sys.platform.lower() == "win64":
     os.system('color')
 
-# Configure session to use filesystem
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
-
-
+# default route, no data is passed to index
 @app.route("/", methods=['POST', 'GET'])
 def index():
     return render_template("index.html")
 
-# need to remove existing geojson layer every time there is a new query - filter wont apply to existing data
-
+# when dates are passed, feed data to index
 @app.route("/dates", methods=['POST'])
 def dates():
     app_token="Htp39ZMQbN1AmuufzF1ZlgdFt"
@@ -35,7 +26,8 @@ def dates():
     fr = request.form.get("from")
     to = request.form.get("to")
     url = "https://data.calgary.ca/resource/c2es-76ed.geojson?$where=issueddate > '"+fr+"' and issueddate < '"+to+"'"
+    # request with url
     data = requests.get(url).json()
+    # get only features
     data2 = data['features']
-    print(data2)
     return render_template("index.html",data=data2)
