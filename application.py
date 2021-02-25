@@ -24,7 +24,6 @@ def index():
 def dates():
     # get today's date
     today = datetime.today().strftime('%Y-%m-%d')
-    print(today)
     # get from and to dates from the date picker
     fr = request.form.get("from")
     to = request.form.get("to")
@@ -43,7 +42,6 @@ def dates():
     data = requests.get(url).json()
     # get only features
     data2 = data['features']
-    print(data2)
     # if there are no results, send error
     if data2 == []:
         err1=1
