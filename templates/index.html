@@ -33,6 +33,8 @@
 
   // for every geojson object
   {% for a in data %}
+    // check that there is geometry for the object - the marker cannot be displayed without geometry
+    {% if a['geometry']['type'] is defined %}
     var feature = {
       "type": "{{a['type']}}",
       "geometry":{
@@ -51,6 +53,7 @@
     var feat = L.geoJSON(feature, {onEachFeature: onEachFeature});
     // add to cluster
     markers.addLayer(feat);
+    {% endif %}
   {% endfor %}
 
   // add clusters to map
@@ -61,17 +64,18 @@
 <!-- time picker widget -->
 <!-- also takes care of error messages if from is later than to, or if there are no permits available for the range, or from date is in the future-->
 <!-- selected dates are also displayed when a successful selection is made -->
+<!-- previous search is also stored in the widget-->
 <h1>
 <div id="time-ranges" class="leaflet-bar">
-  <h3>Choose a date range and click "Update" to view permits.</h3>
+  <h3>Choose a date range and click "Update" to view permits with location data.</h3>
   <form action="{{ url_for('dates') }}" method="post" id="form">
     <label for="from">
       From:
-      <input id="from" type="date" value="2020-01-01" name="from">
+      <input id="from" type="date" value={{fr}} name="from">
     </label>
     <label for="to">
       To:
-      <input id="to" type="date" value="2020-01-31" name="to">
+      <input id="to" type="date" value={{to}} name="to">
     </label>
     <button class="btn btn-outline-primary">Update</button>
     {% if err == 1 %}

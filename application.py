@@ -17,7 +17,10 @@ if sys.platform.lower() == "win64":
 # default route, no data is passed to index
 @app.route("/", methods=['POST', 'GET'])
 def index():
-    return render_template("index.html")
+    # get today's date
+    today = datetime.today().strftime('%Y-%m-%d')
+    # default dates for widget will be passed as today's date
+    return render_template("index.html", fr=today, to=today)
 
 # when dates are passed, feed data to index
 @app.route("/dates", methods=['POST'])
@@ -47,4 +50,4 @@ def dates():
         err1=1
     else:
         err1=0
-    return render_template("index.html",data=data2, fr=fr, to=to, err=err, err1=err1, err2=err2)
+    return render_template("index.html",data=data2, fr=fr, to=to, today=today, err=err, err1=err1, err2=err2)

@@ -17,10 +17,12 @@ It is also checked whether the "From" date selected is later than the current da
 the dates queried.
 
 index.html - The interactive map webpage. A simple map is rendered centered at Calgary (Open Street Map + mapbox are used). The date picker widget is in
-the top right corner of the page. If dates are submitted using the widget, the page is refreshed with markers/marker clusters displayed for the queried
-dates. A message is also displayed in the widget when a query has been performed. A message displays the queried dates if the search was successful.
-An error message is displayed if the user entered a "From" date later than a "To" date. A message is also displayed if the selected dates did not return
-any permits. An additional message is also shown if the user enters a "From" date in the future.
+the top right corner of the page. The geojson data collected from the City of Calgary API is looped through to create markers and add them to clusters. A marker
+can only be created if there is geometry data for the object. If dates are submitted using the widget, the page is refreshed with markers/marker clusters
+displayed for the queried dates. A message is also displayed in the widget when a query has been performed. A message displays the queried dates if the search
+was successful. An error message is displayed if the user entered a "From" date later than a "To" date. A message is also displayed if the selected dates
+did not return any permits. An additional message is also shown if the user enters a "From" date in the future. The widget also stores the current search dates;
+for the default route, today's date is displayed in both "From" and "To".
 
 layout.html - The layout format for any html pages. Contains all header links as well as styling.
 
