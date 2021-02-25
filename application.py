@@ -25,9 +25,19 @@ def dates():
     # get from and to dates from the date picker
     fr = request.form.get("from")
     to = request.form.get("to")
+    # if from is later than to, send error
+    if fr > to:
+        err=1
+    else:
+        err=0
     url = "https://data.calgary.ca/resource/c2es-76ed.geojson?$where=issueddate > '"+fr+"' and issueddate < '"+to+"'"
     # request with url
     data = requests.get(url).json()
     # get only features
     data2 = data['features']
-    return render_template("index.html",data=data2)
+    # if there are no results, send error
+    if data2 == []:
+        err1=1
+    else:
+        err1=0
+    return render_template("index.html",data=data2, fr=fr, to=to, err=err, err1=err1)
